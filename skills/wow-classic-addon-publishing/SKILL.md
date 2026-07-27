@@ -7,22 +7,22 @@ description: Use when publishing or releasing a WoW addon to CurseForge — firs
 
 ## Overview
 
-Releases are **tag-driven**: `git tag vX.Y.Z && git push origin vX.Y.Z` → GitHub Actions → [BigWigs packager](https://github.com/BigWigsMods/packager) → GitHub release + CurseForge upload. The packager is the de-facto community standard; never hand-upload zips once CI is wired.
+Releases are **tag-driven**: `git tag vX.Y.Z && git push origin vX.Y.Z` → GitHub Actions → [BigWigs packager](https://github.com/BigWigsMods/packager) (the community standard) → GitHub release + CurseForge upload. Never hand-upload zips once CI is wired.
 
-On each tag the packager: generates a changelog from commits → replaces `@project-version@` in the `.toc` with the tag → derives CurseForge game versions from the `## Interface:` list → zips as `AddonName-vX.Y.Z-classic.zip` → uploads to the CurseForge project ID from the `.toc` → creates a GitHub release with the zip + `release.json`.
+On each tag the packager: changelog from commits → `@project-version@` in the `.toc` replaced with the tag → game versions derived from the `## Interface:` list → zip named `AddonName-vX.Y.Z-classic.zip` → upload to the CurseForge project ID in the `.toc` → GitHub release with the zip + `release.json`.
 
 ## Quick reference
 
 | Fact | Value |
 |---|---|
-| Workflow template | `references/release-workflow.yml` — copy verbatim |
+| Workflow template | [references/release-workflow.yml](references/release-workflow.yml) — copy verbatim |
 | GitHub token env var | `GITHUB_OAUTH` (NOT `GITHUB_TOKEN` — wrong name = silent no-op) |
 | Workflow permissions | `permissions: contents: write` (new repos default read-only) |
 | CurseForge auth | Author token from https://legacy.curseforge.com/account/api-tokens (instant) as secret `CF_API_KEY` — org-level with visibility "all" covers every repo |
 | Wrong API to avoid | "CurseForge for Studios" (docs.curseforge.com) — consumer browse API, multi-day approval, cannot publish |
 | Upload target | `## X-Curse-Project-ID: <numeric id>` in the `.toc` (missing = upload silently skipped) |
 | Version substitution | `## Version: @project-version@` in the `.toc` |
-| Game versions | Derived from `## Interface: 11500, ..., 11509` list — keep current or CurseForge tags the release as an old game version |
+| Game versions | Derived from the `.toc` `## Interface:` list (comma-separated build numbers) — keep the list current or CurseForge tags the release as an old game version |
 
 ## Greenfield: first-time publication
 
@@ -30,7 +30,7 @@ On each tag the packager: generates a changelog from commits → replaces `@proj
 2. Push to GitHub: `git init -b main && git add . && git commit -m "Initial commit"` then `gh repo create <org>/<Addon> --public --source=. --remote=origin --push`. Ensure the org/repo has the `CF_API_KEY` secret (`gh secret set CF_API_KEY --org <org> --visibility all`).
 3. **Manual first submission** at https://authors.curseforge.com/#/projects/create/choose-game → World of Warcraft → game version Classic Era → category → paste README as description. Moderator review takes a few hours to ~24h.
 4. After approval, copy the numeric **Project ID** from the project edit URL into `## X-Curse-Project-ID:`.
-5. Add `.github/workflows/release.yml` from `references/release-workflow.yml`.
+5. Add `.github/workflows/release.yml` copied from [references/release-workflow.yml](references/release-workflow.yml).
 6. `git tag v0.1.0 && git push origin v0.1.0`. Verify (below). Subsequent releases are step 6 only.
 
 ## Brownfield
