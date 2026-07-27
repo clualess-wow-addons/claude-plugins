@@ -1,7 +1,7 @@
 {
-  "name": "wow-classic-addon-development",
-  "description": "Skills for developing World of Warcraft Classic Era addons — API reference, taint/combat lockdown, events, Ace3, SavedVariables, and more.",
-  "version": "0.4.1",
+  "name": "wow-classic-dev",
+  "description": "WoW Classic Era development skills — addon development (API/taint/events reference), CurseForge publishing, and WeakAuras.",
+  "version": "0.5.0",
   "author": {
     "name": "clualess-wow-addons",
     "url": "https://github.com/clualess-wow-addons"

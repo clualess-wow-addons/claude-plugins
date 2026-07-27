@@ -1,5 +1,5 @@
 {
-  "name": "clualess-wow-development",
+  "name": "clualess-wow-addons",
   "description": "Claude Code plugins from the clualess-wow-addons org for WoW Classic Era addon development.",
   "owner": {
     "name": "clualess-wow-addons",
@@ -7,9 +7,9 @@
   },
   "plugins": [
     {
-      "name": "wow-classic-addon-development",
+      "name": "wow-classic-dev",
       "source": "./",
-      "description": "Skills for developing World of Warcraft Classic Era addons — API reference, taint/combat lockdown, events, Ace3, SavedVariables, and more."
+      "description": "WoW Classic Era development skills — addon development (API/taint/events reference), CurseForge publishing, and WeakAuras."
     }
   ]
 }

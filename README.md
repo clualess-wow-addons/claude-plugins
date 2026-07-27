@@ -1,12 +1,12 @@
-# wow-classic-addon-development
+# wow-classic-dev
 
-A [Claude Code](https://claude.com/claude-code) plugin with skills for developing World of Warcraft Classic Era addons, used across the [clualess-wow-addons](https://github.com/clualess-wow-addons) projects.
+A [Claude Code](https://claude.com/claude-code) plugin with skills for World of Warcraft Classic Era development — addon development, CurseForge publishing, and WeakAuras — from the [clualess-wow-addons](https://github.com/clualess-wow-addons) org.
 
 ## Install
 
 ```
-/plugin marketplace add clualess-wow-addons/skills
-/plugin install wow-classic-addon-development@clualess-wow-development
+/plugin marketplace add clualess-wow-addons/claude-plugins
+/plugin install wow-classic-dev@clualess-wow-addons
 ```
 
 ## Skills
