@@ -1,4 +1,4 @@
-# clualess-wow-classic-development
+# wow-classic-addon-development
 
 A [Claude Code](https://claude.com/claude-code) plugin with skills for developing World of Warcraft Classic Era addons, used across the [clualess-wow-addons](https://github.com/clualess-wow-addons) projects.
 
@@ -6,7 +6,7 @@ A [Claude Code](https://claude.com/claude-code) plugin with skills for developin
 
 ```
 /plugin marketplace add clualess-wow-addons/skills
-/plugin install clualess-wow-classic-development@clualess-wow-addons
+/plugin install wow-classic-addon-development@clualess-wow-addons
 ```
 
 ## Skills

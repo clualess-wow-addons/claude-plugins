@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "clualess-wow-classic-development",
+      "name": "wow-classic-addon-development",
       "source": "./",
       "description": "Skills for developing World of Warcraft Classic Era addons — API reference, taint/combat lockdown, events, Ace3, SavedVariables, and more."
     }
