@@ -1,5 +1,5 @@
 ---
-name: wow-classic-addon-developer
+name: wow-classic-addon-development
 description: Use when creating, debugging, reviewing, or optimizing World of Warcraft Classic Era / Vanilla (1.15.x) Lua addons — Lua errors, taint or combat-lockdown ("action blocked") issues, frame and event handling, combat-log parsing, SavedVariables, slash commands, secure action buttons, TOC files, Ace3/LibStub, cast tracking, or any question about Classic Era API availability.
 ---
 
