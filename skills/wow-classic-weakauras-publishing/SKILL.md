@@ -1,15 +1,15 @@
-# Publishing, import/export, and wago.io
+---
+name: wow-classic-weakauras-publishing
+description: Use when publishing or updating a WeakAura on wago.io — export/import strings, page versioning and changelogs, delivering updates through the WeakAuras Companion, keeping users' settings and positions intact across updates, structuring a pack so it stays updatable, or inspecting any aura's code from the command line via the wago data API.
+---
 
-Verified against WeakAuras 5.21.8 Transmission.lua/Types.lua and live data.wago.io probes, July 2026.
+# WoW Classic WeakAuras Publishing
 
-## Contents
-- Export string format
-- Import and the update flow (what survives an update)
-- Custom Options merge rules
-- wago.io publishing and versioning
-- The Companion update pipeline (metadata you must ship)
-- Inspecting any aura's code (wago data API)
-- Pack architecture lessons from the top packs
+## Overview
+
+Distribution for WeakAuras runs through wago.io: you export an aura as a `!WA:2!` string, paste it onto a wago page, and users import it in-game or receive updates via the Companion app. The two things authors get wrong: shipping without the metadata that makes Companion updates work, and renaming option keys so users lose their settings on update. Verified against WeakAuras 5.21.8 source (Transmission.lua/Types.lua) and live data.wago.io probes, July 2026.
+
+For *writing* the aura (triggers, aura_env, custom options shapes), use the `wow-classic-weakauras-development` skill.
 
 ## Export string format
 
@@ -33,9 +33,7 @@ WA matches an incoming import to an installed aura **by `uid`** — same uid = u
 
 This is why packs are updatable without users losing settings — as long as the author does not rename option keys. Users can override any category per import.
 
-## Custom Options merge rules
-
-On load/update, `validateUserConfig` deletes corrupt entries, fills **only nil** config keys with author defaults (existing user values kept), and resizes array-group entries per limitType. `aura_env.config` is a CopyTable of the merged result, ready before On Init runs. Option types and config shapes: see aura-environment.md.
+On load/update, `validateUserConfig` deletes corrupt entries, fills **only nil** config keys with author defaults (existing user values kept), and resizes array-group entries per limitType. Option types and `aura_env.config` shapes: see the `wow-classic-weakauras-development` skill.
 
 ## wago.io publishing and versioning
 
@@ -71,10 +69,10 @@ curl 'https://data.wago.io/lookup/wago?id=<slug>'                      # page me
 curl 'https://data.wago.io/lookup/wago/code?id=<slug>&version=<vs>'    # decoded table JSON + all custom code + luacheck
 curl 'https://data.wago.io/api/raw/encoded?id=<slug>'                  # raw !WA:2! string (follow the 302)
 curl 'https://data.wago.io/api/check/weakauras?ids=<slug1>,<slug2>'    # Companion-style update check
-curl 'https://data.wago.io/search?q=<terms>&expansion=classic&sort=views'  # search; sort=views|stars|installs|date
+curl 'https://data.wago.io/search?q=<terms>&expansion=classic&sort=stars'  # search; sort=views|stars|installs|date
 ```
 
-Popularity note: in the classic bucket, views/stars are the meaningful signal — Companion "installs" run 1-3 orders of magnitude lower. Offline decoders exist (Rust `weakauras-codec`, Python `python-weakauras-tool`) but wago's Editor/Code Review tabs are the most reliable readers.
+Popularity note: in the classic bucket, stars (favoriteCount, verify via the lookup endpoint) and views are the meaningful signals — Companion "installs" run 1-3 orders of magnitude lower; star-per-view ratio best flags actively-valued auras. Offline decoders exist (Rust `weakauras-codec`, Python `python-weakauras-tool`) but wago's Editor/Code Review tabs are the most reliable readers.
 
 ## Pack architecture lessons from the top packs
 
@@ -85,4 +83,4 @@ Decoded from Luxthos – Hunter (Classic Era) and Fojji's anchor packs:
 - **Anchor decoupling (Fojji):** one movable parent aura exposes named sub-group anchors that separately-imported packs attach to — user layout survives pack updates; 8.5k installs say it works.
 - **Version like Luxthos:** semver-ish versionString (`1.15.8-9` = client patch + iteration) with per-version changelogs.
 - **Update-safe by construction:** keep option keys stable across versions (the userconfig category preserves values by key); structure changes ride the arrangement/newchildren/oldchildren categories.
-- Suites that need cross-aura settings use the config-bus pattern (examples.md #12).
+- Suites that need cross-aura settings use a config-bus pattern (one options-owner aura publishes to a `_G` table and broadcasts a ScanEvents custom event) — see the `wow-classic-weakauras-development` skill's examples.

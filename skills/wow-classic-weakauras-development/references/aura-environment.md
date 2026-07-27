@@ -64,7 +64,7 @@ cfg.style.scale       -- Option Group (simple)
 cfg.spells[i].name    -- Option Group (array)
 ```
 
-Option types: toggle, input, number, range, color, select, multiselect, media (+ noninteractive description/space/header, and group simple|array). On updates, only nil keys receive author defaults — existing user values are kept (see publishing-wago.md for the full update semantics).
+Option types: toggle, input, number, range, color, select, multiselect, media (+ noninteractive description/space/header, and group simple|array). On updates, only nil keys receive author defaults — existing user values are kept (full update semantics in the `wow-classic-weakauras-publishing` skill).
 
 ## The sandbox: what's blocked
 

@@ -27,7 +27,7 @@ Style note: decoded patterns keep their original code style — including explic
 | [Debuffs on nameplates](https://wago.io/4je3fCkT3) (#1: 213k views) | TSU + filtered CLEU + GUID→nameplate resolution + clone anchoring |
 | [Jeyp's Boss Frames](https://wago.io/5Pz4pCOF5) (112k views) | Synthesized boss frames; 225-char addon-macrotext limit (late-2024 Blizzard change) constrains click-frames |
 | [Cludes class packs](https://wago.io/z6xqQay0S) (9 classes, ~40-98k views each) | Big packs with ZERO custom code — built-in triggers + dynamic groups scale fine |
-| [Luxthos packs](https://www.luxthos.com/hunter-weakauras-for-world-of-warcraft-classic-era-hardcore/) | Custom-options-driven configurability; see publishing-wago.md for the decoded architecture |
+| [Luxthos packs](https://www.luxthos.com/hunter-weakauras-for-world-of-warcraft-classic-era-hardcore/) | Custom-options-driven configurability; decoded architecture in the `wow-classic-weakauras-publishing` skill |
 | [Fojji – Raid Pack Anchors](https://wago.io/Hwx_pYSPh) (8.5k installs) | Anchor-group architecture decoupling user layout from pack updates |
 | [Classic – Warrior – Defcon](https://wago.io/pFY9Mig50) | Swing-timer-driven decision support (Heroic Strike cancel window spark) |
 | [nanShield Classic Era](https://wago.io/QYAI_P7h1) | CLEU absorb reconstruction; fork lineage + min-WA-version documentation |

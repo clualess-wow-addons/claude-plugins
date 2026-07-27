@@ -1,6 +1,6 @@
 ---
 name: wow-classic-weakauras-development
-description: Use when creating, debugging, reviewing, or publishing WeakAuras for WoW Classic Era — custom triggers (Event/Status/TSU), CLEU filters, allstates/clones, aura_env, custom text or duration functions, load conditions for Era/SoD/Hardcore, wago.io import strings and updates, or an aura that silently stopped firing after a WeakAuras update.
+description: Use when creating, debugging, or reviewing WeakAuras for WoW Classic Era — custom triggers (Event/Status/TSU), CLEU filters, allstates/clones, aura_env, custom text or duration functions, load conditions for Era/SoD/Hardcore, or an aura that silently stopped firing after a WeakAuras update. For wago.io publishing/Companion updates use wow-classic-weakauras-publishing.
 ---
 
 # WoW Classic Era WeakAuras Development
@@ -28,7 +28,7 @@ Reference for authoring WeakAuras (custom auras) on the Classic Era flavor (clie
 | UnitBuff/UnitAura | Deprecation shims on 1.15.8+ (cvar-gated, will be removed). Use `WA_GetUnitBuff/WA_GetUnitDebuff` (sandbox helpers with C_UnitAuras fallback) or `C_UnitAuras` directly |
 | ScanEvents is async | `WeakAuras.ScanEvents("MY_EVENT", ...)` delivers on the **next frame**, not synchronously |
 | Updates keep user config | The import/update dialog's `userconfig` and `anchor` categories default to OFF — users keep their option values and positions as long as you don't rename option keys |
-| Read any wago aura's code without importing | `curl 'https://data.wago.io/lookup/wago/code?id=<slug>'` returns the decoded aura table, every custom-code block, and luacheck results (`<slug>` = the wago.io URL path segment; browser User-Agent required). Same data in-browser: the aura page's **Editor** tab. Full endpoint list in [references/publishing-wago.md](references/publishing-wago.md) |
+| Read any wago aura's code without importing | `curl 'https://data.wago.io/lookup/wago/code?id=<slug>'` returns the decoded aura table, every custom-code block, and luacheck results (`<slug>` = the wago.io URL path segment; browser User-Agent required). Same data in-browser: the aura page's **Editor** tab. Full endpoint list in the `wow-classic-weakauras-publishing` skill |
 
 ## Reference files
 
@@ -36,7 +36,6 @@ Reference for authoring WeakAuras (custom auras) on the Classic Era flavor (clie
 - [references/aura-environment.md](references/aura-environment.md) — every custom-code entry point, `aura_env` fields and lifecycle, sandbox limits, WA helper functions, custom text/duration/activation/animation/dynamic-group functions.
 - [references/classic-era-specifics.md](references/classic-era-specifics.md) — flavor packaging, Load-tab options for Era/SoD/Hardcore, trigger types removed or exclusive on Era, era API differences inside aura code, the 2026 realm landscape.
 - [references/examples.md](references/examples.md) — working patterns harvested from the top wago.io classic auras (swing timer, energy ticks, CLEU procs, multi-target clones, nameplate anchoring, clickable auras, absorb accounting…), each with source attribution.
-- [references/publishing-wago.md](references/publishing-wago.md) — export-string format, wago.io publishing and versioning, the Companion update pipeline, settings-preserving update categories, pack architecture lessons from Luxthos/Fojji, and the data API for inspecting any aura's code.
 - [references/top-auras-by-class.md](references/top-auras-by-class.md) — decoded-code field study of the top wago auras per class (~120 auras, stars-ranked tables with views alongside): cross-class findings, stars-vs-views analysis, the one-snippet-per-class table (energy tick, FSR mana tick, powershift counter, Bouk castbar, seal-twist schools…), and per-class top-10 tables with patterns.
 
 ## Common mistakes
