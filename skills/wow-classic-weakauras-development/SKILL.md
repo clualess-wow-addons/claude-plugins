@@ -10,7 +10,7 @@ description: Use when creating, debugging, reviewing, or publishing WeakAuras fo
 Reference for authoring WeakAuras (custom auras) on the Classic Era flavor (client 1.15.x). Verified against WeakAuras 5.21.8 source, the official wiki, and decoded code from the top wago.io classic auras (July 2026).
 
 **Core principles:**
-1. **Built-in triggers first.** A decoded-code census of the top 10 wago auras for all nine classes (~90 auras) found built-ins carrying ~90-96% of all triggers, with at least one zero-custom-Lua aura in every class's top 10 — including 100+-child packs. Reach for custom code only when no built-in trigger covers it; built-in trigger configuration is UI-discoverable in `/wa` — this skill documents the custom-code layer.
+1. **Built-in triggers first.** A decoded-code census of the top wago auras for all nine classes (~120 auras, ranked by both stars and views) found built-ins carrying ~90-96% of all triggers, with at least one zero-custom-Lua aura in every class's top 10 — including 100+-child packs. Reach for custom code only when no built-in trigger covers it; built-in trigger configuration is UI-discoverable in `/wa` — this skill documents the custom-code layer.
 2. **Verify for the Era flavor.** WA ships one codebase but gates features per flavor; retail answers (and retail wiki examples) are often wrong on Era. Same for the client API — see the `wow-classic-addon-development` skill for general Era API rules.
 3. **Filter in the Event(s) box, not in Lua.** WA pre-filters CLEU subevents and unit events before your function runs — it's strictly cheaper, and for CLEU it's mandatory (see below).
 
@@ -37,7 +37,7 @@ Reference for authoring WeakAuras (custom auras) on the Classic Era flavor (clie
 - [references/classic-era-specifics.md](references/classic-era-specifics.md) — flavor packaging, Load-tab options for Era/SoD/Hardcore, trigger types removed or exclusive on Era, era API differences inside aura code, the 2026 realm landscape.
 - [references/examples.md](references/examples.md) — working patterns harvested from the top wago.io classic auras (swing timer, energy ticks, CLEU procs, multi-target clones, nameplate anchoring, clickable auras, absorb accounting…), each with source attribution.
 - [references/publishing-wago.md](references/publishing-wago.md) — export-string format, wago.io publishing and versioning, the Companion update pipeline, settings-preserving update categories, pack architecture lessons from Luxthos/Fojji, and the data API for inspecting any aura's code.
-- [references/top-auras-by-class.md](references/top-auras-by-class.md) — decoded-code field study of the top 10 wago auras per class (~90 auras): cross-class findings, the one-snippet-per-class table (energy tick, FSR mana tick, powershift counter, Bouk castbar, seal-twist schools…), and per-class top-10 tables with patterns.
+- [references/top-auras-by-class.md](references/top-auras-by-class.md) — decoded-code field study of the top wago auras per class (~120 auras, stars-ranked tables with views alongside): cross-class findings, stars-vs-views analysis, the one-snippet-per-class table (energy tick, FSR mana tick, powershift counter, Bouk castbar, seal-twist schools…), and per-class top-10 tables with patterns.
 
 ## Common mistakes
 
