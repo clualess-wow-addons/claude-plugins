@@ -1,0 +1,32 @@
+# CurseForge + GitHub release automation via BigWigs packager.
+# Copy to .github/workflows/release.yml — works as-is for any addon whose
+# .toc contains "## X-Curse-Project-ID:" and "## Version: @project-version@",
+# in a repo/org that has the CF_API_KEY secret.
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '[0-9]*.[0-9]*.[0-9]*'
+
+# New repos issue a read-only GITHUB_TOKEN; without write the GitHub release
+# fails and the CurseForge upload is skipped.
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history — the packager builds the changelog from commits
+
+      - name: Package and release
+        uses: BigWigsMods/packager@v2
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          # The packager reads ONLY the name GITHUB_OAUTH. Naming this
+          # GITHUB_TOKEN causes a silent no-op: green run, no release.
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
