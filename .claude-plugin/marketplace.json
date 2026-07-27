@@ -2,7 +2,7 @@
   "name": "clualess-wow-development",
   "description": "Claude Code plugins from the clualess-wow-addons org for WoW Classic Era addon development.",
   "owner": {
-    "name": "clualess-wow-development",
+    "name": "clualess-wow-addons",
     "url": "https://github.com/clualess-wow-addons"
   },
   "plugins": [
