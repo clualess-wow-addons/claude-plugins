@@ -6,7 +6,7 @@ A [Claude Code](https://claude.com/claude-code) plugin with skills for developin
 
 ```
 /plugin marketplace add clualess-wow-addons/skills
-/plugin install wow-classic-addon-development@clualess-wow-addons
+/plugin install wow-classic-addon-development@clualess-wow-development
 ```
 
 ## Skills
