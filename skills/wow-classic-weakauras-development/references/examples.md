@@ -40,6 +40,8 @@ Style note: decoded patterns keep their original code style — including explic
 
 Inspect any of them without importing: wago page → Editor tab (decoded table + custom code) / Code Review tab, or `curl 'https://data.wago.io/lookup/wago/code?id=<slug>'`.
 
+For a per-class breakdown (top 10 auras per class with decoded-code analysis, plus the FSR mana-tick, powershift-counter, and GUID-scoped CC snippets), see [top-auras-by-class.md](top-auras-by-class.md).
+
 ## 1. Melee swing timer
 
 **Prefer the built-in trigger**: Trigger → Status → "Swing Timer" (present on Era; handles extra attacks skipping resets, parry-haste — WA shortens the swing 40% clamped to a 20%-remaining floor — cast pauses, and the era on-next-hit reset spells: Slam, Heroic Strike, Cleave, Raptor Strike, Maul, shoots/wands). WA's own UI warns results are approximate on non-retail.
