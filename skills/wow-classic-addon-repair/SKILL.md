@@ -17,6 +17,7 @@ Copy this checklist and track progress per broken addon:
 
 ```
 Repair Progress:
+- [ ] 0. Export the errors from the game (BugGrabber SavedVariables)
 - [ ] 1. Collect the FIRST error per file (cascade rule)
 - [ ] 2. Classify each root error by signature
 - [ ] 3. Verify the symbol against live client source
@@ -27,7 +28,16 @@ Repair Progress:
 - [ ] 8. Note the lifecycle caveat
 ```
 
-**Step 1 — Collect errors; apply the cascade rule.** From BugSack/BugGrabber or the default error frame. A Lua file is one chunk: when it aborts at line N, everything it would have defined after N doesn't exist — so later errors like `attempt to index global 'X' (a nil value)` from XML OnLoad handlers, `table index is nil` in data files, and "Unknown function Y in element OnLoad" warnings are usually **cascades, not bugs**. Fix the first error per file; re-test (`/reload`, clear the error log, re-exercise the addon); only then treat survivors as real. Caveat: dumps can mix load-time chunk errors with *deferred* errors from inside functions (event handlers, clicks) that ran later or in a previous session — the cascade rule applies to the load-time ones; a later-line error from the same file may simply be code that only runs post-login.
+**Step 0 — Export the errors from the game.** The addon sandbox has no file I/O or network: error data reaches disk ONLY via SavedVariables, written ONLY on logout or `/reload`. The standard capture stack is **BugGrabber** (engine) + BugSack (optional in-game UI) — and persistence requires the **standalone `!BugGrabber` addon**; copies embedded inside other addons capture errors for the session but never write them to disk (their host's `.toc` doesn't declare `BugGrabberDB`). Pipeline:
+
+1. Ensure the standalone `!BugGrabber` folder is installed in `Interface/AddOns/` (embedded copies auto-defer to it).
+2. After errors occur, `/reload` (or log out) to flush.
+3. The errors are now at `<flavor dir>/WTF/Account/<ACCOUNT>/SavedVariables/!BugGrabber.lua` — a plain Lua file assigning `BugGrabberDB = { session = N, errors = { {message, stack, locals, session, counter, time}, ... } }` (retention capped by `BugGrabberDB.limit`, default 50).
+4. Run the bundled digester: `lua scripts/export-errors.lua "<flavor dir>"` (add `--all-sessions` to include retained older sessions). It reads every account's file, groups errors by addon and file, and mechanically marks the first error per file as ROOT CANDIDATE — the judgment calls (XML/data-file entries marked "root" for *their* file are usually cascades of another file's abort) stay with step 1.
+
+Fallback without the script or standalone install: copy individual errors from BugSack's in-game window — but the SavedVariables route captures *everything* with stacks and locals, not just what the user selected.
+
+**Step 1 — Collect errors; apply the cascade rule.** From the step-0 digest, BugSack/BugGrabber in-game, or the default error frame. A Lua file is one chunk: when it aborts at line N, everything it would have defined after N doesn't exist — so later errors like `attempt to index global 'X' (a nil value)` from XML OnLoad handlers, `table index is nil` in data files, and "Unknown function Y in element OnLoad" warnings are usually **cascades, not bugs**. Fix the first error per file; re-test (`/reload`, clear the error log, re-exercise the addon); only then treat survivors as real. Caveat: dumps can mix load-time chunk errors with *deferred* errors from inside functions (event handlers, clicks) that ran later or in a previous session — the cascade rule applies to the load-time ones; a later-line error from the same file may simply be code that only runs post-login.
 
 **Step 2 — Classify by signature.** Use the quick-reference table below. The three big families: removed global *function* (call/hook sites), removed *event*, renamed *XML template*.
 
