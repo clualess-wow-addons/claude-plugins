@@ -334,6 +334,8 @@ aura_env.button:SetAllPoints()
 
 Constraints: attribute changes are blocked in combat; item `/use` works via secure attributes where direct spell attributes fail on Era (see the tradeskill-casting note in the workspace memory); since late 2024 addon-set macrotext is capped at ~225 chars (reported by Jeyp's Boss Frames' author — limit value unverified).
 
+**Click registration (1.15.8+):** always `RegisterForClicks("AnyDown", "AnyUp")`. The 1.15.8 refactor imported the modern `SecureActionButton_OnClick` gate (`clickAction = (down and useOnKeyDown) or (not down and not useOnKeyDown)`, Blizzard_FrameXML/SecureTemplates.lua) — buttons registered only for `"...Up"` clicks silently stop executing when key-down casting is in effect. Registering both phases executes exactly once per click under every cvar setting. This broke pre-1.15.8 clickable auras in the wild (symptom: aura visible, clicks do nothing, no error).
+
 ## 12. Cross-aura config bus
 
 Verbatim pattern from [Zippy's Raid Reset Timers](https://wago.io/mPnf_gBer):

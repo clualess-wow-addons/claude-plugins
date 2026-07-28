@@ -103,6 +103,10 @@ Still present on Era: `DefaultCompactUnitFrameSetup`, `DefaultCompactMiniFrameSe
 | `InterfaceOptionsCheckButtonTemplate`, `OptionsSmallCheckButtonTemplate`, `OptionsFrameTabButtonTemplate` | Still exist via `Blizzard_FrameXML/DeprecatedTemplates.xml` |
 | `text:SetFont("GameFontNormal", size, flags)` | Old clients tolerated the FontObject NAME; now errors "Invalid font asset". Use `GameFontNormal:GetFont()` for the real file path |
 
+## Secure buttons: the down-click gate
+
+1.15.8 imported the modern `SecureActionButton_OnClick` (Blizzard_FrameXML/SecureTemplates.lua — absent in 1.15.7): protected actions now execute on the **down** press when `useOnKeyDown` resolves true (attribute, else the `ActionButtonUseKeyDown` cvar). Symptom: a SecureActionButtonTemplate button registered only for `"LeftButtonUp"`-style up-clicks is visible and hoverable but **clicks silently do nothing** — no error anywhere. Fix: `RegisterForClicks("AnyDown", "AnyUp")` — the gate guarantees exactly one execution per click whichever phase is active. Applies to addons AND clickable WeakAuras (secure overlays in aura init actions).
+
 ## Frame-shape changes
 
 - `MiniMapTracking` is created **parentless** on Era (MinimapTracking_Simple.xml top-level frame, `GetParent() == nil`) — code doing `frame:GetParent():GetCenter()` crashes. Fix: parent it (e.g. to `Minimap`) before geometry, or guard.
