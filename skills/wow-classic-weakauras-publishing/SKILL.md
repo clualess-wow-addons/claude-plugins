@@ -60,6 +60,22 @@ So: fill the **URL field** (in-game Information tab) with the aura's wago URL. W
 
 Third-party updaters can deliver auras via `WeakAuras.AddCompanionData(data)` (don't name your table `WeakAurasCompanion`).
 
+## Patching an aura and shipping it back as an import string
+
+You can decode, edit, and re-encode an aura outside the game — useful for handing a user a fixed import string instead of walking them through in-game edits. Run the same pipeline WeakAuras uses, with standalone [LibSerialize](https://github.com/rossnichols/LibSerialize) + [LibDeflate](https://github.com/SafeteeWoW/LibDeflate) (both are plain Lua, `dofile`-able outside WoW):
+
+```lua
+-- decode
+local t = select(2, LibSerialize:Deserialize(
+    LibDeflate:DecompressDeflate(LibDeflate:DecodeForPrint(str:match("^!WA:2!(.+)$")))))
+-- patch t.d (root) and t.c[i] (children) …
+-- re-encode with WA's exact settings
+local out = "!WA:2!" .. LibDeflate:EncodeForPrint(LibDeflate:CompressDeflate(
+    LibSerialize:SerializeEx({errorOnUnserializableType = false}, t), {level = 9}))
+```
+
+**Always verify by round-trip**: decode your own output and deep-diff it against the pristine original — the diff must contain exactly the fields you intended to change, nothing else. Since the `uid` is preserved, the user's import is offered as an **Update** (settings and position kept), not a duplicate. Tell them to accept Update, not "Import as Copy", and to `/reload` afterwards — auras whose init actions create frames keep the old frame until the UI reloads. Note: on Hardcore realms WA shows a custom-code import confirmation; on 1.15.8 that dialog itself errors (`Update.lua`, `self.text` nil) but the import still completes.
+
 ## Inspecting any aura's code (wago data API)
 
 Probed working July 2026 (curl with a browser User-Agent; the older documented `/api/lookup/wago` 404s):

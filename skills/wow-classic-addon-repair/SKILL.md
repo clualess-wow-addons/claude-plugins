@@ -67,6 +67,16 @@ Fallback without the script or standalone install: copy individual errors from B
 | `attempt to index local 'x' (a nil value)` in frame code | A frame the addon assumes exists changed shape (nil parent, renamed child, Frame where Texture expected) | Read the error's Locals block; verify the frame's current XML in the client dump; adopt/create defensively with type + parent checks |
 | Script ran too long (`LUA_WARNING`, execution time limit) | Performance watchdog, NOT a crash — and the stack often points at an innocent bystander, not the spender | Usually ignore if Count:1; investigate only if recurring |
 
+## Probing in-game (`/run`) — three hard constraints
+
+Diagnostic one-liners are how you get evidence when nothing is on screen. They fail silently in ways that look like "the game ignored me":
+
+1. **255-character chat limit.** Anything longer is truncated mid-statement and dies as a syntax error (`function arguments expected near '<eof>'`, `'=' expected near '<eof>'`). Keep probes short; split into several rather than one big one.
+2. **Errors are captured, not shown**, once BugGrabber/BugSack is installed — the only feedback is BugSack's `error.ogg` alert sound. "Nothing happened (but I heard a squeak)" means *your probe threw*: `/reload` and read it with `scripts/export-errors.lua` (step 0).
+3. **Verify API names before probing.** `WeakAuras.regions` is deprecated → use `WeakAuras.GetRegion(id)`; a wrong symbol just adds another silent error.
+
+Probe results are frames, not assumptions: enumerate `{region:GetChildren()}` and match by `GetObjectType()` — e.g. a WeakAuras icon region's first child is its **cooldown frame**, not the addon's button, so index-based probes interrogate the wrong object.
+
 ## Red flags — stop and return to the workflow
 
 - "I'll just wrap it in pcall" — suppression leaves the feature broken and hides the next regression. (In WeakAuras custom code pcall is blocked anyway.)

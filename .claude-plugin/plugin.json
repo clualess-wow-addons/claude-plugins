@@ -1,7 +1,7 @@
 {
   "name": "wow-classic-dev",
   "description": "WoW Classic Era development skills — addon development (API/taint/events reference), CurseForge publishing, and WeakAuras.",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "author": {
     "name": "clualess-wow-addons",
     "url": "https://github.com/clualess-wow-addons"
